@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import random
-plt.style.use("ggplot")
+# plt.style.use("ggplot")
 
 
 def plotting(results):
@@ -20,18 +20,18 @@ def plot_sample(X, y, preds, binary_preds, ix=None):
     if ix is None:
         ix = random.randint(0, len(X))
 
-    has_mask = y[ix].max() > 0
+    # has_mask = y[ix].max() > 0
 
-    fig, ax = plt.subplots(1, 2, figsize=(20, 10))
+    fig, ax = plt.subplots(1, 2, figsize=(10, 10))
     ax[0].imshow(X[ix, ..., 0])
-    if has_mask:
-        ax[0].contour(y[ix].squeeze())
+    # if has_mask:
+    #     ax[0].contour(y[ix].squeeze())
     ax[0].set_title('Bottle')
 
     ax[1].imshow(preds[ix, ..., 0])
     # ax[1].imshow(preds[ix].squeeze(), vmin=0, vmax=1)
-    if has_mask:
-        ax[1].contour(y[ix].squeeze())
+    # if has_mask:
+    #     ax[1].contour(y[ix].squeeze())
     ax[1].set_title('Bottle Predicted')
 
     plt.show()
