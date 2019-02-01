@@ -1,7 +1,7 @@
 
 import numpy as np
 from keras.callbacks import ModelCheckpoint
-from segmentation_models import Unet, PSPNet
+from segmentation_models import Unet
 from segmentation_models.backbones import get_preprocessing
 from sklearn.model_selection import train_test_split
 from unet_seg.plot import plotting, plot_sample
@@ -14,7 +14,7 @@ root_path = os.getcwd()
 path_train = root_path+'\\input\\train\\'
 path_test = root_path+'\\input\\test\\'
 # backbone = 'resnet34'
-backbone = 'resnet50'
+backbone = 'resnet101'
 checkpoint = 'model-bottles_'+backbone+'.h5'
 input_shape = (256, 256, 1)
 
