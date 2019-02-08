@@ -1,6 +1,7 @@
 from keras.applications.mobilenet_v2 import MobileNetV2
 from keras.layers import Dense, Input, Dropout
 from keras.models import Model
+from keras.optimizers import Adam
 
 def build_model(in_w, in_h):
     in_tensor = Input(shape=(in_w, in_h, 3))
@@ -17,5 +18,7 @@ def build_model(in_w, in_h):
 
     out_tensor = Dense(10, activation='softmax')(op)
     model = Model(inputs=in_tensor, outputs=out_tensor)
-
+    model.compile(optimizer=Adam(),
+                  loss='categorical_crossentropy',
+                  metrics=['categorical_accuracy'])
     return model
