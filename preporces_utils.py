@@ -2,14 +2,16 @@ import numpy as np
 from PIL import Image
 from sklearn.utils import shuffle
 from skimage.transform import resize
+from glob import glob
+import cv2
 import os
+from pathlib import Path
+from sklearn.model_selection import train_test_split
 
-
-# SIZE = 96
-# train_images =glob("D:\\ds\\whiskey\\whisky_labels\\train\\**\\*.jpg", recursive=True)
-#и
-# whisky_labels = next(os.walk('D:\\ds\\whiskey\\whisky_labels\\train\\'))[1]
-# y_train = np.empty(0)
+SIZE = 96
+train_images =glob("D:\\ds\\whiskey\\whisky_labels\\train\\**\\*.jpg", recursive=True)
+whisky_labels = next(os.walk('D:\\ds\\whiskey\\whisky_labels\\train\\'))[1]
+path = 'D:\\ds\\whiskey\\whisky_labels\\train\\'
 
 
 def preprocess_image(x, SIZE):
@@ -26,9 +28,9 @@ def preprocess_image(x, SIZE):
     return x.astype(np.float32)
 
 
-def import_image(filename, SIZE):
-    img = Image.open(filename).convert("LA").resize((SIZE, SIZE))
-    return np.array(img)[:, :, 0]
+# def import_image(filename, SIZE):
+#     img = Image.open(filename).convert("LA").resize((SIZE, SIZE))
+#     return np.array(img)[:, :, 0]
 
 
 def load_data_generator(x, y, SIZE, batch_size=30):
@@ -48,6 +50,23 @@ def load_data_generator(x, y, SIZE, batch_size=30):
 
 def get_labels(whisky_labels, path):
     y = np.empty(0)
-    for k, v in dict(zip(range(10), whisky_labels)).items():
+    for k, v in dict(zip(range(len(whisky_labels)), whisky_labels)).items():
         y = np.append(y, np.full(len(next(os.walk(path))), k))
     return y
+
+
+
+def import_image(filename, size):
+    p = Path(filename)
+    return resize(cv2.imread(filename),
+                  (size, size),
+                  mode='constant',
+                  anti_aliasing=False), p.parent.stem
+
+
+
+# images = glob(path+'/**/*jpg')
+# whisky_brands = next(os.walk(path))[1]
+# y=get_whisky_brands(whisky_brands,path)
+
+data = [import_image(img, SIZE) for img in train_images]

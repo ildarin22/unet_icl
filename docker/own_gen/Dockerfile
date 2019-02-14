@@ -21,7 +21,7 @@ FROM ubuntu:16.04
 ARG TF_SERVING_VERSION_GIT_BRANCH=r1.11
 ARG TF_SERVING_VERSION_GIT_COMMIT=head
 
-LABEL maintainer="ildarin21@gmail.com"
+# LABEL maintainer="ildarin21@gmail.com"
 # LABEL tensorflow_serving_github_branchtag=${TF_SERVING_VERSION_GIT_BRANCH}
 # LABEL tensorflow_serving_github_commit=${TF_SERVING_VERSION_GIT_COMMIT}
 
@@ -49,9 +49,9 @@ RUN mkdir -p ${MODEL_BASE_PATH}
 WORKDIR  ${MODEL_BASE_PATH}
 
 # The only required piece is the model name in order to differentiate endpoints
-ENV MODEL_NAME=tf_serving_keras_mobilenetv2_idg
+ENV MODEL_NAME=tf_serving_keras_mobilenetv2
 
-COPY models/export/tf_serving_keras_mobilenetv2_idg tf_serving_keras_mobilenetv2_idg
+COPY models/export/tf_serving_keras_mobilenetv2 tf_serving_keras_mobilenetv2
 
 # Create a script that runs the model server so we can use environment variables
 # while also passing in arguments from the docker command line
